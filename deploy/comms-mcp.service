@@ -1,0 +1,47 @@
+## systemd unit for dizaster
+## Save to: /etc/systemd/system/comms-mcp.service
+## Enable: sudo systemctl daemon-reload && sudo systemctl enable --now comms-mcp
+
+[Unit]
+Description=COMMS-MCP — Centralised communication MCP server
+After=network.target
+
+[Service]
+Type=simple
+User=kamau
+WorkingDirectory=/home/kamau/comms-mcp
+EnvironmentFile=/home/kamau/comms-mcp/.env
+ExecStart=/usr/bin/node src/index.js
+Restart=on-failure
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=comms-mcp
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
+
+
+## Claude Desktop config (~/.config/claude/claude_desktop_config.json)
+## Add under "mcpServers":
+##
+## Option A — HTTP (server runs as systemd service, recommended)
+## "comms-mcp": {
+##   "url": "http://100.118.209.46:3700/mcp",
+##   "headers": { "Authorization": "Bearer YOUR_MCP_API_KEY" }
+## }
+##
+## Option B — stdio (Claude Desktop spawns the process)
+## "comms-mcp": {
+##   "command": "node",
+##   "args": ["/home/kamau/comms-mcp/src/index.js", "--stdio"],
+##   "env": {
+##     "MCP_API_KEY":        "...",
+##     "TELNYX_API_KEY":     "...",
+##     "TELNYX_FROM_NUMBER": "+254...",
+##     "RESEND_API_KEY":     "re_...",
+##     "EMAIL_FROM":         "you@domain.com"
+##   }
+## }
