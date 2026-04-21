@@ -1,0 +1,29 @@
+{
+  "name": "comms-mcp",
+  "version": "1.0.0",
+  "description": "Centralised communication MCP server — SMS, Voice, Email, OTP, Hashing",
+  "type": "module",
+  "main": "src/index.js",
+  "bin": {
+    "comms-mcp": "./src/index.js"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "start:stdio": "node src/index.js --stdio",
+    "dev": "node --watch src/index.js",
+    "dev:stdio": "node --watch src/index.js --stdio"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.10.0",
+    "argon2": "^0.41.1",
+    "express": "^4.19.2",
+    "node-fetch": "^3.3.2",
+    "telnyx": "^2.1.0",
+    "twilio": "^5.3.0",
+    "resend": "^4.0.0",
+    "zod": "^3.23.8"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
